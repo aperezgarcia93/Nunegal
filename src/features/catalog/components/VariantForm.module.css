@@ -1,10 +1,38 @@
 .form { display: grid; gap: 1rem; margin-top: 1.1rem; }
-.selectors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
-.selectors label { display: grid; gap: .4rem; color: var(--ink-teal); font-size: .8rem; font-weight: 800; letter-spacing: .03em; }
-/* Cream input surfaces with a teal focus glow. */
-.selectors select { min-width: 0; min-height: 2.85rem; border: 2px solid var(--primary-dark); border-radius: var(--radius-md); padding: .55rem .7rem; background: var(--cream); color: var(--ink); font-weight: 600; cursor: pointer; }
-.selectors select:focus-visible { box-shadow: var(--shadow-teal-glow); }
-.selectors select:disabled { cursor: not-allowed; opacity: .6; }
+
+.group { min-width: 0; margin: 0; border: 0; padding: 0; }
+.group legend { margin-bottom: .45rem; padding: 0; color: var(--ink-teal); font-size: .8rem; font-weight: 800; letter-spacing: .03em; }
+.options { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+/* Pill option buttons: cream surface; the chosen one turns gold, glows and shows a check mark. */
+.option {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  min-height: 2.75rem;
+  border: 2px solid var(--primary-dark);
+  border-radius: var(--radius-round);
+  padding: .4rem 1rem;
+  background: var(--cream);
+  color: var(--ink);
+  font-size: .9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+/* The native radio stays in the accessibility tree and keyboard order but is drawn by the pill. */
+.option input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: inherit; }
+.group:not(:disabled) .option:not(:has(input:checked)):hover { background: var(--primary-bg); }
+.option:has(input:checked) { border-color: var(--ink); background: linear-gradient(180deg, var(--accent-light), var(--accent)); box-shadow: var(--shadow-accent-glow); font-weight: 800; }
+.option:has(input:focus-visible) { outline: 3px solid var(--ink); outline-offset: 3px; box-shadow: var(--shadow-teal-glow); }
+.check { font-weight: 900; }
+.group:disabled .option { cursor: not-allowed; opacity: .6; }
+.empty { color: var(--muted); font-size: .85rem; }
+
 /* Warning note: coral accent bar, AA-safe dark coral text. */
 .hint { margin: 0; border-left: 4px solid var(--coral); border-radius: var(--radius-md); padding: .55rem .8rem; background: #fff0eb; color: var(--ink-coral); font-size: .85rem; font-weight: 600; line-height: 1.45; }
-@media (max-width: 460px) { .selectors { grid-template-columns: 1fr; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .option { transition: transform var(--duration) var(--ease-bounce), background-color var(--duration) ease, box-shadow var(--duration) ease; }
+  .group:not(:disabled) .option:active { transform: scale(.95); }
+}

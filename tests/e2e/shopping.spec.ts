@@ -24,15 +24,15 @@ test('searches, opens a product, adds exact options, and restores the returned c
   await expect(page.getByRole('navigation', { name: 'Breadcrumb' })).toContainText('Acer Iconia Talk S');
   await expect(page.getByLabel('Cart items: 7')).toBeVisible();
   // The sole color is preselected; storage has two options and must be chosen.
-  await expect(page.getByLabel('Color')).toHaveValue('0');
+  await expect(page.getByRole('radio', { name: 'Black' })).toBeChecked();
   await expect(page.getByRole('button', { name: 'Add to cart' })).toBeDisabled();
-  await page.getByLabel('Storage').selectOption({ label: '32 GB' });
+  await page.getByRole('radio', { name: '32 GB' }).check();
   await page.getByRole('button', { name: 'Add to cart' }).click();
   await expect(page.getByRole('status').filter({ hasText: 'Acer Iconia Talk S added to your cart.' })).toBeAttached();
   // A lower count from the service replaces the stored one.
   await expect(page.getByLabel('Cart items: 3')).toBeVisible();
   expect(log.posts).toEqual([{ id: rawProductDetail.id, colorCode: 1000, storageCode: 2001 }]);
-  await expect(page.getByLabel('Storage')).toHaveValue('1');
+  await expect(page.getByRole('radio', { name: '32 GB' })).toBeChecked();
 
   // Direct refresh of a client route: served by the SPA fallback, detail and count come from storage.
   await page.reload();
@@ -51,7 +51,7 @@ test('accepts a zero count and repeats a deliberate addition with a new request 
   const counts = [0, 1];
   const log = await mockApi(page, { cart: (route) => route.fulfill({ json: { count: counts.shift() } }) });
   await page.goto(`/products/${rawProductDetail.id}`);
-  await page.getByLabel('Storage').selectOption({ label: '16 GB' });
+  await page.getByRole('radio', { name: '16 GB' }).check();
   await page.getByRole('button', { name: 'Add to cart' }).click();
   await expect(page.getByLabel('Cart items: 0')).toBeVisible();
   await page.getByRole('button', { name: 'Add to cart' }).click();
@@ -108,8 +108,10 @@ test('completes the purchase journey with the keyboard only', async ({ page, bro
   await expect(page.getByRole('link', { name: 'View Acer Iconia Talk S' })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('heading', { level: 1, name: 'Iconia Talk S' })).toBeFocused();
-  await page.getByLabel('Storage').focus();
-  await page.getByLabel('Storage').selectOption({ label: '32 GB' });
+  // Arrow keys move through a radio group and select the focused option.
+  await page.getByRole('radio', { name: '16 GB' }).focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(page.getByRole('radio', { name: '32 GB' })).toBeChecked();
   await page.keyboard.press('Tab');
   await expect(page.getByRole('button', { name: 'Add to cart' })).toBeFocused();
   await page.keyboard.press('Enter');

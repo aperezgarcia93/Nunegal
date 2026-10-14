@@ -11,8 +11,12 @@ describe('variant selection', () => {
       storages={[{ code: 20, label: '16 GB' }, { code: 21, label: '32 GB' }]}
       purchaseUnavailableReason={null} pending={false} onAdd={onAdd}
     />);
-    expect(screen.getByLabelText('Color')).toHaveValue('0');
-    fireEvent.change(screen.getByLabelText('Storage'), { target: { value: '1' } });
+    // Both kinds of option stay visible as button groups; a sole option is pre-checked.
+    expect(screen.getByRole('group', { name: 'Color' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Black' })).toBeChecked();
+    expect(screen.getByRole('radio', { name: '16 GB' })).not.toBeChecked();
+    expect(screen.getByRole('radio', { name: '32 GB' })).not.toBeChecked();
+    fireEvent.click(screen.getByRole('radio', { name: '32 GB' }));
     fireEvent.click(screen.getByRole('button', { name: 'Add to cart' }));
     expect(onAdd).toHaveBeenCalledWith({ id: 'product-a', colorCode: 0, storageCode: 21 }, 'Acer Iconia');
   });
@@ -28,9 +32,10 @@ describe('variant selection', () => {
     const add = screen.getByRole('button', { name: 'Add to cart' });
     expect(add).toBeDisabled();
     expect(add).toHaveAccessibleDescription('Choose a color and a storage option to continue.');
-    fireEvent.change(screen.getByLabelText('Color'), { target: { value: '1' } });
-    fireEvent.change(screen.getByLabelText('Storage'), { target: { value: '0' } });
-    expect(screen.getByLabelText('Color')).toHaveValue('1');
+    fireEvent.click(screen.getByRole('radio', { name: 'Blue' }));
+    fireEvent.click(screen.getByRole('radio', { name: '64 GB' }));
+    expect(screen.getByRole('radio', { name: 'Blue' })).toBeChecked();
+    expect(screen.getByRole('radio', { name: '64 GB' })).toBeChecked();
     fireEvent.click(add);
     expect(onAdd).toHaveBeenCalledWith({ id: 'p', colorCode: 'blue', storageCode: '64' }, 'Phone');
   });
@@ -40,6 +45,8 @@ describe('variant selection', () => {
     render(<VariantForm productId="p" label="Phone" colors={[{ code: 1, label: 'Black' }]} storages={[{ code: 2, label: '16 GB' }]}
       purchaseUnavailableReason={null} pending onAdd={onAdd} />);
     expect(screen.getByRole('button', { name: 'Adding…' })).toBeDisabled();
+    expect(screen.getByRole('radio', { name: 'Black' })).toBeDisabled();
+    expect(screen.getByRole('radio', { name: '16 GB' })).toBeDisabled();
     fireEvent.submit(screen.getByRole('button', { name: 'Adding…' }).closest('form')!);
     expect(onAdd).not.toHaveBeenCalled();
   });

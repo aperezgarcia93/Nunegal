@@ -29,7 +29,7 @@ describe('shopping navigation', () => {
     expect(await screen.findByRole('heading', { name: 'Iconia Talk S' })).toBeInTheDocument();
     expect(screen.getByText('Screen resolution')).toBeInTheDocument();
     expect(screen.getByLabelText('Cart items: 7')).toBeInTheDocument();
-    await user.selectOptions(screen.getByLabelText('Storage'), '1');
+    await user.click(screen.getByRole('radio', { name: '32 GB' }));
     await user.click(screen.getByRole('button', { name: 'Add to cart' }));
     expect(await screen.findByText('Acer Iconia Talk S added to your cart.')).toBeInTheDocument();
     expect(postedBody).toEqual({ id: 'ZmGrkLRPXOTpxsU4jjAcv', colorCode: 1000, storageCode: 2001 });

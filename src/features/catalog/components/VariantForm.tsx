@@ -8,6 +8,31 @@ function uniqueOptions(options: VariantOption[]): boolean {
   return options.length > 0 && tokens.every((token, index) => token !== 'undefined:undefined' && tokens.indexOf(token) === index);
 }
 
+/** One kind of option as a row of pill buttons (radio semantics), as in the brief's wireframe. */
+function OptionGroup({ legend, name, options, value, disabled, onChange }: {
+  legend: string;
+  name: string;
+  options: VariantOption[];
+  value: string;
+  disabled: boolean;
+  onChange: (value: string) => void;
+}) {
+  return <fieldset className={styles.group} disabled={disabled}>
+    <legend>{legend}</legend>
+    <div className={styles.options}>
+      {options.map((option, index) => {
+        const checked = value === String(index);
+        return <label key={`${typeof option.code}:${String(option.code)}`} className={styles.option}>
+          <input type="radio" name={name} value={String(index)} checked={checked} onChange={(event) => onChange(event.target.value)} />
+          {checked && <span className={styles.check} aria-hidden="true">✓</span>}
+          {option.label}
+        </label>;
+      })}
+      {!options.length && <span className={styles.empty}>Not available</span>}
+    </div>
+  </fieldset>;
+}
+
 export function VariantForm({ productId, label, colors, storages, purchaseUnavailableReason, pending, onAdd }: {
   productId: string;
   label: string;
@@ -37,20 +62,10 @@ export function VariantForm({ productId, label, colors, storages, purchaseUnavai
   }
 
   return <form className={styles.form} onSubmit={submit}>
-    <div className={styles.selectors}>
-      <label>Color
-        <select value={current.color} disabled={!validOptions || pending} onChange={(event) => setSelection({ ...current, color: event.target.value })}>
-          {colors.length !== 1 && <option value="">Choose a color</option>}
-          {colors.map((option, index) => <option key={`${typeof option.code}:${String(option.code)}`} value={String(index)}>{option.label}</option>)}
-        </select>
-      </label>
-      <label>Storage
-        <select value={current.storage} disabled={!validOptions || pending} onChange={(event) => setSelection({ ...current, storage: event.target.value })}>
-          {storages.length !== 1 && <option value="">Choose storage</option>}
-          {storages.map((option, index) => <option key={`${typeof option.code}:${String(option.code)}`} value={String(index)}>{option.label}</option>)}
-        </select>
-      </label>
-    </div>
+    <OptionGroup legend="Color" name={`color-${productId}`} options={colors} value={current.color}
+      disabled={!validOptions || pending} onChange={(color) => setSelection({ ...current, color })} />
+    <OptionGroup legend="Storage" name={`storage-${productId}`} options={storages} value={current.storage}
+      disabled={!validOptions || pending} onChange={(storage) => setSelection({ ...current, storage })} />
     {hint && <p id="variant-hint" className={styles.hint}>{hint}</p>}
     <button className="button button--primary" type="submit" disabled={!ready || pending} aria-describedby={hint ? 'variant-hint' : undefined}>
       {pending ? 'Adding…' : 'Add to cart'}

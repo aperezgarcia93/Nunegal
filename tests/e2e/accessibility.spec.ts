@@ -60,16 +60,12 @@ test('keeps a visible focus indicator on the search field', async ({ page }) => 
   expect(outline).toBe('solid');
 });
 
-test('runs without uncaught errors or CSP violations in the production build', async ({ page, browserName }) => {
+test('runs without uncaught errors or CSP violations in the production build', async ({ page }) => {
   const problems: string[] = [];
-  // WebKit reports a style-src violation for the internal styling of every native <select>, even on a
-  // page with no author styles (reproduced in isolation); it is not caused by application code.
-  const knownWebKitSelectReport = /^Refused to apply a stylesheet because its hash/;
   page.on('pageerror', (error) => problems.push(error.message));
   page.on('console', (message) => {
     const text = message.text();
     if (message.type() !== 'error' || /Failed to load resource/.test(text)) return;
-    if (browserName === 'webkit' && knownWebKitSelectReport.test(text)) return;
     problems.push(text);
   });
   await mockApi(page);

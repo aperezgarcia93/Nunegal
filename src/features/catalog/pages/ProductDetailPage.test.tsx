@@ -28,8 +28,9 @@ describe('product detail page', () => {
     expect(description.compareDocumentPosition(actions) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(heading).toBeInTheDocument();
     expect(screen.getByRole('link', { name: '← Back to catalog' })).toHaveAttribute('href', '/');
-    expect(screen.getByLabelText('Color')).toHaveValue('0');
-    expect(screen.getByLabelText('Storage')).toHaveValue('');
+    expect(screen.getByRole('group', { name: 'Color' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Black' })).toBeChecked();
+    for (const radio of within(screen.getByRole('group', { name: 'Storage' })).getAllByRole('radio')) expect(radio).not.toBeChecked();
     expect(screen.getByRole('button', { name: 'Add to cart' })).toHaveAccessibleDescription('Choose a storage option to continue.');
   });
 
@@ -73,7 +74,7 @@ describe('product detail page', () => {
     const add = await screen.findByRole('button', { name: 'Add to cart' });
     expect(add).toBeDisabled();
     expect(add).toHaveAccessibleDescription('Purchasing options are unavailable for this product.');
-    expect(screen.getByLabelText('Color')).toBeDisabled();
+    expect(screen.getByRole('group', { name: 'Color' })).toBeDisabled();
   });
 
   it('never shows a late earlier product after navigating to another one', async () => {
