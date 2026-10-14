@@ -1,6 +1,6 @@
 # Implementation verification checklist
 
-**Environment:** macOS (Darwin 25.5, arm64), Node.js 22.22.0, npm 10; 2026-10-13. Base commit `afb9dcb` plus the uncommitted verification changes. No deployment or live cart mutation was performed. Per-scenario results are in the [verification report](../openspec/changes/project-implementation/verification-report.md).
+**Environment:** macOS (Darwin 25.5, arm64), Node.js 22.22.0, npm 10; 2026-10-13. Verified at commit `3779570`. No deployment or live cart mutation was performed. Per-scenario results are in the [verification report](../openspec/changes/project-implementation/verification-report.md).
 
 ## Automated checks
 
@@ -14,7 +14,7 @@
 - [x] Gate failures: a temporary failing test exited 1, a lint violation 1, a type error 2.
 - [x] `npm run start`: served `/` and `/products/abc` with HTTP 200. `vite preview` also serves direct product routes (SPA fallback).
 - [ ] GitHub Actions run of `.github/workflows/ci.yml`: not run, because there is no remote yet.
-- [ ] Clean `git clone` rerun: pending until the current changes are committed.
+- [x] Clean `git clone` rerun of commit `3779570`: all scripts and the e2e suite passed.
 
 ## Browser and accessibility acceptance
 

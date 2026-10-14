@@ -20,7 +20,7 @@ Implementation is **functionally complete and verified against fixtures** for 64
 | `npm audit` | 0 vulnerabilities |
 | Deliberate failures (temporary, not committed) | Failing test exit 1, lint violation exit 1, type error exit 2 |
 
-The clean check used a file copy of the working tree rather than a `git clone`, because the latest changes are not committed yet. Repeat it from a clean clone after the next commit.
+The clean check was repeated from a fresh `git clone` of commit `3779570`: `npm ci`, lint, typecheck, test, build and test:e2e all passed (65 browser tests, 1 intentional skip).
 
 ## Scenario results
 
@@ -84,7 +84,7 @@ U = Vitest file under `src/`; E = Playwright spec under `tests/e2e/`.
 | DATA-05c | Passed | U cache failure not cached; PLP/PDP retry |
 | DATA-06a | Passed | E two deliberate additions = two POSTs; U provider |
 | DATA-06b | Passed | U cache leaves cart and unrelated keys untouched; E CART-03a |
-| QUAL-01a | Passed | Clean-copy command matrix above |
+| QUAL-01a | Passed | Fresh `git clone` of `3779570` with the command matrix above |
 | QUAL-01b | Passed | Deliberate failure exits above |
 | QUAL-02a | Passed | E keyboard-only journey on Chromium/Firefox (WebKit skipped: it does not Tab to links by default); E search focus indicator |
 | QUAL-02b | Partially verified | E axe-core WCAG 2.1 A/AA: 0 violations on catalog, PDP, 404; status/alert roles asserted; 640 px reflow (200% zoom) without overflow. **Not run:** manual screen-reader session |
@@ -118,5 +118,5 @@ U = Vitest file under `src/`; E = Playwright spec under `tests/e2e/`.
 
 ## Remaining SDD steps
 
-- **7.4:** publish to a public repository after authorization, then rerun the clean check from a `git clone` and run CI once.
+- **7.4:** publish to a public repository after authorization, then run CI once.
 - **7.5:** archive after acceptance: sync specs into `openspec/specs/` and move this change into the archive.
