@@ -58,7 +58,7 @@ export function ProductDetailPage() {
         <p className={styles.description}>A closer look at the details that make this device yours.</p>
         <ProductAttributes product={product} />
         <div className={styles.purchase}>
-          <h2>Choose your options</h2>
+          <h2><span className={styles.icon} aria-hidden="true">🛒</span>Choose your options</h2>
           <VariantForm
             key={product.id}
             productId={product.id}

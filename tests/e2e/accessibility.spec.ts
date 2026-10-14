@@ -80,3 +80,20 @@ test('runs without uncaught errors or CSP violations in the production build', a
   expect(await page.locator('meta[http-equiv="Content-Security-Policy"]').getAttribute('content')).toContain("script-src 'self'");
   expect(problems).toEqual([]);
 });
+
+test('plays card and button motion only when the visitor has not asked to reduce it', async ({ page }) => {
+  await mockApi(page);
+  await page.goto('/');
+  const card = page.locator('article').filter({ has: page.getByRole('link', { name: 'View Acer Iconia Talk S' }) });
+  const motion = () => card.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return { duration: style.transitionDuration.split(',').map((value) => parseFloat(value)), transform: style.transform };
+  });
+
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  expect((await motion()).duration.every((seconds) => seconds > 0 && seconds <= 0.5)).toBe(true);
+
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await card.hover();
+  expect(await motion()).toEqual({ duration: [0], transform: 'none' });
+});

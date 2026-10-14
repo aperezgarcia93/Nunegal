@@ -16,7 +16,7 @@ export function AppHeader({ productTitle }: { productTitle: string | null }) {
   return <header className={styles.header}>
     <div className={`page-shell ${styles.inner}`}>
       <Link to="/" className={styles.brand} aria-label="Device Shop home">
-        <span className={styles.mark} aria-hidden="true">N</span>
+        <span className={styles.mark} aria-hidden="true"><span>N</span></span>
         <span>device<span className={styles.brandLight}>shop</span></span>
       </Link>
       <nav className={styles.crumbs} aria-label="Breadcrumb">
@@ -26,7 +26,7 @@ export function AppHeader({ productTitle }: { productTitle: string | null }) {
         </ol>
       </nav>
       <div className={styles.cart} role="group" aria-label={`Cart items: ${count}`}>
-        <span aria-hidden="true">◌</span><span>Cart</span><strong>{count}</strong>
+        <span aria-hidden="true">🛒</span><span>Cart</span><strong>{count}</strong>
       </div>
     </div>
     <div className={styles.announcement} role="status" aria-live="polite">{message}</div>

@@ -1,24 +1,113 @@
 @import './tokens.css';
 
 *, *::before, *::after { box-sizing: border-box; }
-body { margin: 0; min-width: 320px; background: var(--paper); color: var(--ink); }
+body { margin: 0; min-width: 320px; background: var(--surface-base); color: var(--ink); line-height: 1.5; }
 button, input, select { font: inherit; }
 button, a, input, select { -webkit-tap-highlight-color: transparent; }
 a { color: inherit; }
-:focus-visible { outline: 3px solid #e08c3c; outline-offset: 3px; }
+h1, h2, h3 { color: var(--ink-teal); font-weight: 800; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; box-shadow: var(--shadow-focus); }
 /* Route headings receive programmatic focus for screen readers; they are not interactive controls. */
-h1[tabindex="-1"]:focus { outline: none; }
+h1[tabindex="-1"]:focus { outline: none; box-shadow: none; }
 img { display: block; max-width: 100%; }
+
 .page-shell { width: min(100% - 2rem, 1240px); margin-inline: auto; }
-.page-main { min-height: calc(100vh - 5rem); padding-top: 1px; padding-bottom: 3rem; }
-.eyebrow { margin: 0; color: var(--accent); font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
+/* Isolated so decorative ribbon tails (z-index: -1) stay above the page background. */
+.page-main { isolation: isolate; min-height: calc(100vh - 5rem); padding-top: 1px; padding-bottom: 3rem; }
+
+/* Retro folded ribbon (DESIGN.md "Ribbon Banner"). */
+.eyebrow {
+  position: relative;
+  display: inline-block;
+  margin: 0 1.1rem;
+  border: 2px solid var(--ink);
+  padding: .2rem .8rem;
+  background: var(--cream);
+  color: var(--ink-teal);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .25em;
+}
+.eyebrow::before, .eyebrow::after {
+  position: absolute;
+  z-index: -1;
+  top: 4px;
+  bottom: -6px;
+  width: 1.4rem;
+  border: 2px solid var(--ink);
+  background: var(--cream-dark);
+  content: "";
+}
+.eyebrow::before { left: -1.1rem; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 40% 50%); }
+.eyebrow::after { right: -1.1rem; clip-path: polygon(0 0, 100% 0, 60% 50%, 100% 100%, 0 100%); }
+
+.page-main > .eyebrow:first-child { margin-top: 2.5rem; }
 .lede { color: var(--muted); line-height: 1.6; }
-.state-message { padding: 1.1rem 1.25rem; border: 1px solid var(--line); border-radius: .8rem; background: var(--surface); color: var(--muted); }
-.button { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 2.75rem; border: 0; border-radius: 999px; padding: .65rem 1.1rem; font-weight: 700; cursor: pointer; transition: background-color .16s ease, transform .16s ease; }
-.button:not(:disabled):active { transform: translateY(1px); }
-.button:disabled { cursor: not-allowed; opacity: .58; }
-.button--primary { color: #fff; background: var(--accent); }
-.button--primary:not(:disabled):hover { background: var(--accent-dark); }
-.button--secondary { color: var(--ink); background: #e9ece8; }
-.image-fallback { display: grid; min-height: 8rem; place-items: center; background: linear-gradient(145deg, #e4e9e4, #f3f5f1); color: #8c9990; font-size: 2rem; }
+
+/* State cards: white, left accent bar for state (teal = info, coral = problem). */
+.state-message {
+  margin: 1rem 0;
+  border-left: 4px solid var(--primary-light);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.25rem;
+  background: var(--surface-card);
+  box-shadow: var(--shadow-card);
+  color: var(--muted);
+}
+.state-message[role="alert"] { border-left-color: var(--coral); box-shadow: var(--shadow-coral-glow); color: var(--ink); }
+.state-message[role="alert"] p { margin-top: 0; }
+
+/* Pill buttons */
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  min-height: 2.75rem;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: var(--radius-round);
+  padding: .6rem 1.4rem;
+  color: var(--ink);
+  font-weight: 800;
+  letter-spacing: .02em;
+  text-decoration: none;
+  cursor: pointer;
+}
+.button:disabled { cursor: not-allowed; opacity: .55; }
+.button--primary {
+  border-color: var(--accent-dark);
+  background: linear-gradient(180deg, var(--accent-light), var(--accent) 55%, var(--accent-dark));
+  box-shadow: var(--shadow-accent-glow);
+}
+/* Gloss highlight */
+.button--primary::before {
+  position: absolute;
+  inset: 0 0 50%;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgb(255 255 255 / 45%), rgb(255 255 255 / 0%));
+  content: "";
+  pointer-events: none;
+}
+.button--primary:disabled { box-shadow: none; }
+.button--secondary { border-color: var(--primary); background: var(--surface-card); color: var(--ink-teal); box-shadow: var(--shadow-teal-glow); }
+.button--secondary:not(:disabled):hover { background: var(--primary-bg); }
+
+.image-fallback {
+  display: grid;
+  min-height: 8rem;
+  place-items: center;
+  background: radial-gradient(circle at 50% 45%, var(--cream), var(--primary-bg) 70%);
+  color: var(--primary-dark);
+  font-size: 2rem;
+}
+
+/* Motion only for visitors who have not asked to reduce it. */
+@media (prefers-reduced-motion: no-preference) {
+  .button { transition: transform var(--duration) var(--ease-bounce), box-shadow var(--duration) ease, background-color var(--duration) ease; }
+  .button:not(:disabled):hover { transform: translateY(-1px); }
+  .button:not(:disabled):active { transform: scale(.95); }
+}
+
 @media (max-width: 480px) { .page-shell { width: min(100% - 1.25rem, 1240px); } }

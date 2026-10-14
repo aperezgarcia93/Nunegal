@@ -38,7 +38,17 @@ All automated tests use fixtures; none of them reach the live service. Vitest us
 
 - **Shopping journeys:** search, detail, exact cart payload, returned-count replacement, reload persistence, history, direct entry, unknown routes, and a keyboard-only journey.
 - **Recovery:** list and detail retry, a single pending addition across navigation, malformed or lost cart responses without replay, out-of-order product responses, and one-hour cache expiry using a controlled clock.
-- **Quality:** axe-core WCAG 2.1 A/AA scans, 320/640/768/1280 px layouts, focus visibility, and absence of console or CSP errors.
+- **Quality:** axe-core WCAG 2.1 A/AA scans, 320/640/768/1280 px layouts, focus visibility, reduced motion, and absence of console or CSP errors.
+
+## Visual design
+
+The look and feel follows [`DESIGN.md`](./DESIGN.md), the Flip7 retro teal, coral and gold system, adapted for a shop. All colours, radii, spacing, glows and motion are tokens in `src/styles/tokens.css`. Shared classes (buttons, ribbon eyebrow, state cards) live in `src/styles/global.css`. The rest of the styling is in each component's CSS module.
+
+- **Not used:** the game-only components (BOOM, rankings, confetti, the FLIP7 logo).
+- **Contrast:** DESIGN.md teal and coral fail WCAG AA as text, so they are used only for fills, borders and glows; text uses darker inks.
+- **Motion:** stays at 500 ms or less and turns off when the visitor prefers reduced motion.
+
+See requirement QUAL-06 in [`openspec/specs/quality-delivery/spec.md`](./openspec/specs/quality-delivery/spec.md).
 
 ## Architecture and behavior
 

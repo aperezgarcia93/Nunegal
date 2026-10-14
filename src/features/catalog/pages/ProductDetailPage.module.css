@@ -1,14 +1,35 @@
 .detailPage { padding-bottom: 3rem; }
-.back { display: inline-block; margin: 1.5rem 0; color: var(--accent-dark); font-size: .9rem; font-weight: 750; text-decoration: none; }
-.back:hover { text-decoration: underline; }
+.back { display: inline-flex; align-items: center; min-height: 2.75rem; margin: 1.5rem 0; border: 2px solid var(--primary); border-radius: var(--radius-round); padding: .35rem 1rem; background: var(--surface-card); box-shadow: var(--shadow-teal-glow); color: var(--ink-teal); font-size: .9rem; font-weight: 800; text-decoration: none; }
+.back:hover { background: var(--primary-bg); }
 .detailLayout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: start; gap: clamp(1.5rem, 4vw, 3.5rem); }
-.imagePanel { display: grid; min-height: 27rem; place-items: center; overflow: hidden; border: 1px solid var(--line); border-radius: 1.2rem; padding: 2rem; background: #e9ede8; }
+
+/* Hero card */
+.imagePanel {
+  display: grid;
+  min-height: 27rem;
+  place-items: center;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  background: radial-gradient(circle at 50% 50%, var(--cream), var(--primary-bg) 70%);
+  box-shadow: 6px 6px 0 var(--primary);
+}
 .productImage { width: 100%; height: 25rem; object-fit: contain; }
+
 .information { min-width: 0; padding-top: .35rem; }
-.information h1 { margin: .35rem 0; font-size: clamp(2rem, 4vw, 3.3rem); letter-spacing: -.05em; line-height: 1.02; }
-.price { margin: .8rem 0; font-size: 1.25rem; font-weight: 850; }
+.information h1 { margin: .9rem 0 .4rem; font-size: clamp(1.9rem, 4vw, 3.1rem); letter-spacing: .02em; line-height: 1.05; }
+.price { display: inline-block; margin: .6rem 0; border: 2px solid var(--ink); border-radius: var(--radius-round); padding: .2rem 1rem; background: linear-gradient(180deg, var(--accent-light), var(--accent)); box-shadow: var(--shadow-accent-glow); color: var(--ink); font-size: 1.2rem; font-weight: 800; }
 .description { margin: .5rem 0; color: var(--muted); line-height: 1.55; }
-.purchase { margin-top: 1.3rem; border: 1px solid var(--line); border-radius: 1rem; padding: 1.2rem; background: var(--surface); }
-.purchase h2 { margin: 0; font-size: 1rem; }
-.cartNote { margin: .9rem 0 0; color: var(--muted); font-size: .78rem; }
-@media (max-width: 760px) { .detailLayout { grid-template-columns: 1fr; gap: 1.2rem; } .imagePanel { min-height: min(72vw, 24rem); } .productImage { height: min(66vw, 22rem); } }
+
+/* Highlighted panel: gold accent bar, golden gradient and glow. */
+.purchase { margin-top: 1.5rem; border-left: 4px solid var(--accent); border-radius: var(--radius-lg); padding: 1.2rem 1.25rem 1.3rem; background: linear-gradient(150deg, var(--surface-card) 40%, var(--cream)); box-shadow: var(--shadow-accent-glow); }
+.purchase h2 { display: flex; align-items: center; gap: .6rem; margin: 0; border-bottom: 2px dashed var(--primary-light); padding-bottom: .6rem; font-size: 1.05rem; letter-spacing: .03em; }
+.icon { display: grid; width: 2rem; height: 2rem; flex: none; place-items: center; border-radius: var(--radius-md); background: var(--primary-bg); font-size: 1rem; }
+.cartNote { margin: .9rem 0 0; color: var(--muted); font-size: .8rem; }
+
+@media (max-width: 760px) {
+  .detailLayout { grid-template-columns: 1fr; gap: 1.4rem; }
+  .imagePanel { min-height: min(72vw, 24rem); box-shadow: 4px 4px 0 var(--primary); }
+  .productImage { height: min(66vw, 22rem); }
+}

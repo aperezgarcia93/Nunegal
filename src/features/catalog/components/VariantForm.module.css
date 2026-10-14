@@ -1,6 +1,10 @@
-.form { display: grid; gap: .9rem; margin-top: 1.35rem; }
+.form { display: grid; gap: 1rem; margin-top: 1.1rem; }
 .selectors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
-.selectors label { display: grid; gap: .4rem; color: var(--muted); font-size: .8rem; font-weight: 750; }
-.selectors select { min-width: 0; min-height: 2.85rem; border: 1px solid var(--line); border-radius: .65rem; padding: .55rem .7rem; background: #fff; color: var(--ink); }
-.hint { margin: 0; color: #805522; font-size: .85rem; line-height: 1.45; }
+.selectors label { display: grid; gap: .4rem; color: var(--ink-teal); font-size: .8rem; font-weight: 800; letter-spacing: .03em; }
+/* Cream input surfaces with a teal focus glow. */
+.selectors select { min-width: 0; min-height: 2.85rem; border: 2px solid var(--primary-dark); border-radius: var(--radius-md); padding: .55rem .7rem; background: var(--cream); color: var(--ink); font-weight: 600; cursor: pointer; }
+.selectors select:focus-visible { box-shadow: var(--shadow-teal-glow); }
+.selectors select:disabled { cursor: not-allowed; opacity: .6; }
+/* Warning note: coral accent bar, AA-safe dark coral text. */
+.hint { margin: 0; border-left: 4px solid var(--coral); border-radius: var(--radius-md); padding: .55rem .8rem; background: #fff0eb; color: var(--ink-coral); font-size: .85rem; font-weight: 600; line-height: 1.45; }
 @media (max-width: 460px) { .selectors { grid-template-columns: 1fr; } }
