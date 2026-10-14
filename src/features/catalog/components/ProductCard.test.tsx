@@ -16,7 +16,7 @@ describe('product card', () => {
     expect(screen.getByRole('img', { name: 'Acer Iconia' })).toHaveAttribute('loading', 'lazy');
     expect(screen.getByText('Acer')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Iconia' })).toBeInTheDocument();
-    expect(screen.getByText('170')).toBeInTheDocument();
+    expect(screen.getByText('€170')).toBeInTheDocument();
   });
 
   it('uses explicit fallbacks for missing values and a failed image', () => {

@@ -1,3 +1,4 @@
+import { formatWeight } from '../model/format';
 import type { ProductDetail } from '../model/product';
 import styles from './ProductAttributes.module.css';
 
@@ -12,7 +13,7 @@ export function ProductAttributes({ product }: { product: ProductDetail }) {
     ['Battery', display(product.attributes.battery)],
     ['Cameras', product.attributes.cameras.length ? product.attributes.cameras.join(' · ') : 'Not available'],
     ['Dimensions', display(product.attributes.dimensions)],
-    ['Weight', display(product.attributes.weight)],
+    ['Weight', formatWeight(product.attributes.weight)],
   ];
   return <dl className={styles.attributes}>
     {rows.map(([label, value]) => <div key={label} className={styles.row}>

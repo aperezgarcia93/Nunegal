@@ -17,7 +17,7 @@ describe('product attributes', () => {
     expect(valueOf('Battery')).toBe('Non-removable Li-Ion 3400 mAh battery (12.92 Wh)');
     expect(valueOf('Cameras')).toBe('13 MP · autofocus · 2 MP · 720p');
     expect(valueOf('Dimensions')).toBe('191.7 x 101 x 9.4 mm');
-    expect(valueOf('Weight')).toBe('260');
+    expect(valueOf('Weight')).toBe('260 g');
   });
 
   it('marks absent values as unavailable', () => {

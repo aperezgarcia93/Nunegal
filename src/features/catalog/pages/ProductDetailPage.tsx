@@ -4,6 +4,7 @@ import { useCart } from '../../cart/cartContext';
 import { ProductAttributes } from '../components/ProductAttributes';
 import { VariantForm } from '../components/VariantForm';
 import { productApi } from '../api/productApi';
+import { formatPrice } from '../model/format';
 import { useProductResource } from '../hooks/useProductResource';
 import { EmptyState, ErrorState, LoadingState } from '../../../shared/ui/AsyncState';
 import { ProductImage } from '../../../shared/ui/ProductImage';
@@ -54,7 +55,7 @@ export function ProductDetailPage() {
       <section className={styles.information} aria-labelledby="product-title">
         <p className="eyebrow">{product.brand || 'DEVICE'}</p>
         <h1 id="product-title" tabIndex={-1}>{product.model || 'Model unavailable'}</h1>
-        <p className={styles.price}>{product.priceText ?? 'Price unavailable'}</p>
+        <p className={styles.price}>{formatPrice(product.priceText)}</p>
         <p className={styles.description}>A closer look at the details that make this device yours.</p>
         <ProductAttributes product={product} />
         <div className={styles.purchase}>

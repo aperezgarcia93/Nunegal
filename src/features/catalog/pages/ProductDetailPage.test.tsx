@@ -22,7 +22,7 @@ describe('product detail page', () => {
     renderApp(`/products/${productDetail.id}`);
     const heading = await screen.findByRole('heading', { level: 1, name: 'Iconia Talk S' });
     expect(screen.getByRole('img', { name: 'Acer Iconia Talk S' })).toHaveAttribute('loading', 'eager');
-    expect(screen.getByText('170')).toBeInTheDocument();
+    expect(screen.getByText('€170')).toBeInTheDocument();
     const description = screen.getByText('Screen resolution');
     const actions = screen.getByRole('heading', { name: 'Choose your options' });
     expect(description.compareDocumentPosition(actions) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();

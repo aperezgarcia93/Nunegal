@@ -22,6 +22,9 @@ test('searches, opens a product, adds exact options, and restores the returned c
   await expect(page).toHaveURL(new RegExp(`/products/${rawProductDetail.id}$`));
   await expect(page.getByRole('heading', { level: 1, name: 'Iconia Talk S' })).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Breadcrumb' })).toContainText('Acer Iconia Talk S');
+  // Plain numeric service values are shown with the assumed units.
+  await expect(page.getByText('€170', { exact: true })).toBeVisible();
+  await expect(page.getByText('260 g', { exact: true })).toBeVisible();
   await expect(page.getByLabel('Cart items: 7')).toBeVisible();
   // The sole color is preselected; storage has two options and must be chosen.
   await expect(page.getByRole('radio', { name: 'Black' })).toBeChecked();
