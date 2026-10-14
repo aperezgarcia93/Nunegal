@@ -3,9 +3,7 @@
 ## Purpose
 
 Describe browsing and real-time local filtering. New capability; **Mandate** denotes PDF obligations and **Decision** denotes prototype choices. Source IDs are defined in [exploration.md](../../changes/archive/2026-10-13-project-implementation/exploration.md).
-
 ## Requirements
-
 ### Requirement: CAT-01 — Complete catalog
 
 The PLP MUST retrieve the supplied product collection and show every valid returned product without pagination, arbitrary truncation, or hidden subsets. A valid empty collection MUST produce a catalog-empty state. A malformed collection MUST follow DATA-02 rather than silently hiding products.
@@ -45,14 +43,14 @@ Every input change MUST immediately filter the already loaded collection by a ca
 
 ### Requirement: CAT-03 — Product card information
 
-Each card MUST expose image, brand, model, and price. Missing text MUST use an explicit unavailable label; a blank price MUST NOT become zero or acquire an invented currency. An unavailable or failed image MUST have a stable fallback and a useful accessible product description.
+Each card MUST expose image, brand, model, and price. Missing text MUST use an explicit unavailable label; a blank price MUST NOT become zero or acquire a currency. A price that is a plain number MUST be shown in euros, and any other supplied price MUST be shown as supplied. An unavailable or failed image MUST have a stable fallback and a useful accessible product description.
 
-**Mandate:** PDF-11 (p. 4). **Decision:** missing-display-data fallbacks and no assumed currency.
+**Mandate:** PDF-11 (p. 4). **Decision:** missing-display-data fallbacks. EUR is assumed for plain numeric prices because the brief comes from a Spanish retailer; the service states no currency.
 
 #### Scenario: CAT-03a — Complete card
-- GIVEN a product with all card fields
+- GIVEN a product with all card fields and a plain numeric price such as `170`
 - WHEN its card renders
-- THEN the image, brand, model, and supplied price are displayed without an assumed currency symbol.
+- THEN the image, brand, model, and price `€170` are displayed.
 
 #### Scenario: CAT-03b — Missing presentation fields
 - GIVEN a valid product identity with blank price and a failed image URL
@@ -85,3 +83,4 @@ The PLP MUST distinguish pending, ready, empty, filtered-empty, and failed outco
 - GIVEN collection retrieval fails
 - WHEN the visitor activates retry and the next request succeeds
 - THEN the error is replaced by the loaded collection without reloading the document.
+

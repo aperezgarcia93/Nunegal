@@ -24,7 +24,9 @@ Representative sanitized detail excerpt:
 {"id":"ZmGrkLRPXOTpxsU4jjAcv","brand":"Acer","model":"Iconia Talk S","price":"170","displayResolution":"720 x 1280 pixels (~210 ppi pixel density)","primaryCamera":["13 MP","autofocus"],"secondaryCmera":["2 MP","720p"],"dimentions":"191.7 x 101 x 9.4 mm (7.55 x 3.98 x 0.37 in)","weight":"260","options":{"colors":[{"code":1000,"name":"Black"}],"storages":[{"code":2000,"name":"16 GB"},{"code":2001,"name":"32 GB"}]}}
 ```
 
-The source's requested screen-resolution attribute maps to `displayResolution` because that field contains pixels. `displaySize` is not substituted for resolution. Missing/blank optional values remain unavailable in the UI. No currency symbol or units are added.
+The source's requested screen-resolution attribute maps to `displayResolution` because that field contains pixels. `displaySize` is not substituted for resolution. Missing/blank optional values remain unavailable in the UI. The service states no currency or units.
+
+On 2026-10-14 every live price was a whole-number string, and the weights in a sample of 13 details (every eighth product) were plain numbers between 105 and 700. The UI therefore shows a plain numeric price in euros (`€170`) and a plain numeric weight in grams (`260 g`). EUR is an assumption based on the brief's Spanish origin. Values that are not plain numbers are shown as supplied. See `src/features/catalog/model/format.ts`.
 
 ## Read-only CORS and preflight observation
 

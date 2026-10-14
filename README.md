@@ -59,7 +59,7 @@ React, TypeScript, Vite and React Router provide a client-routed SPA:
 - `src/shared/cache/productCache.ts` caches the list and each detail independently for exactly one hour, keeps the cache in `localStorage` with an in-memory fallback, and coalesces concurrent reads.
 - `src/features/cart/` sends the exact `{ id, colorCode, storageCode }` and stores the count the service returns under its own key, so the count does not expire with the product cache.
 
-Search is local and never requests data. Selectors stay visible; an option is preselected only when it is the only one. A cart addition is never retried automatically. If the outcome is uncertain, the visitor is told that another attempt may add another item. Only one addition can be pending in the whole app.
+Search is local and never requests data. Colour and storage options are rows of pill buttons, as in the brief's wireframe; they use native radio groups for keyboard and screen readers. Both rows are always visible, and an option is preselected only when it is the only one. A cart addition is never retried automatically. If the outcome is uncertain, the visitor is told that another attempt may add another item. Only one addition can be pending in the whole app.
 
 The production build adds a Content-Security-Policy that allows only same-origin scripts and styles, and the API origin for data and images. Internal links use `/` and `/products/:productId`. A static host must serve `index.html` for those routes (SPA fallback) while still returning 404 for missing assets. It should also send the CSP as a header with `frame-ancestors`.
 
@@ -68,7 +68,10 @@ The production build adds a Content-Security-Policy that allows only same-origin
 - **API base:** `VITE_API_BASE_URL` is public configuration and defaults to `https://itx-frontend-test.onrender.com`. It must never contain credentials.
 - **Cold starts:** the free-tier service can take about 50 s to wake up. The first request then times out after 20 s, and "Try again" succeeds once the service is warm.
 - **Unknown products:** the service answers unknown ids with HTTP 500, so the app shows a retryable error rather than "not found".
-- **Prices:** prices are shown as the raw strings the service provides; blank prices read "Price unavailable", and no currency is invented.
+- **Prices and weights:** the service sends bare numbers with no currency or unit.
+  - A plain numeric price is shown in euros (`€170`). EUR is an assumption based on the brief's Spanish origin.
+  - A plain numeric weight is shown in grams (`260 g`).
+  - Other values are shown as supplied, and blank prices read "Price unavailable".
 - **Cart persistence:** when browser storage is unavailable, the cart count still works for the current session but does not survive a reload.
 - **Cart semantics:** no cart read, identity, cross-tab synchronization or idempotency is assumed. No live cart request was sent during development.
 
