@@ -119,4 +119,4 @@ U = Vitest file under `src/`; E = Playwright spec under `tests/e2e/`.
 ## Remaining SDD steps
 
 - **7.4:** publish to a public repository after authorization, then run CI once.
-- **7.5:** archive after acceptance: sync specs into `openspec/specs/` and move this change into the archive.
+- **7.5:** done. Specs are synced into `openspec/specs/` and this change is archived.

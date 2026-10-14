@@ -6,7 +6,7 @@ Build a client-rendered React + TypeScript SPA with Vite, React Router in declar
 
 The PDF mandates two views, React/Preact, API integration, one-hour caching, persisted cart count, scripts, and repository delivery. Framework details, state policies, accessibility safeguards, and tests are selected engineering decisions. Specifications are the behavioral acceptance contract; this document describes implementation. Source requirement IDs and page references live in [exploration.md](exploration.md).
 
-Read-only contract evidence checked on 2026-10-13 is recorded in [`docs/api-contract.md`](../../../docs/api-contract.md): list fields include string `id`, `brand`, `model`, `price`, and `imgUrl`; one detail GET confirmed actual attribute keys and numeric option-code shape for one product. CORS GET headers and JSON POST preflight headers were also observed. Full catalog variation, not-found/error shapes, browser-engine behavior, cookie/session meaning, and cart response semantics remain unverified. The implementation preserves these limitations and does not send cart mutations during checks.
+Read-only contract evidence checked on 2026-10-13 is recorded in [`docs/api-contract.md`](../../../../docs/api-contract.md): list fields include string `id`, `brand`, `model`, `price`, and `imgUrl`; one detail GET confirmed actual attribute keys and numeric option-code shape for one product. CORS GET headers and JSON POST preflight headers were also observed. Full catalog variation, not-found/error shapes, browser-engine behavior, cookie/session meaning, and cart response semantics remain unverified. The implementation preserves these limitations and does not send cart mutations during checks.
 
 ## Architecture decisions
 

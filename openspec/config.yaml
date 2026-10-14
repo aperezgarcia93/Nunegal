@@ -1,5 +1,5 @@
 schema: spec-driven
 rules:
   apply:
-    tdd: true
-    test_command: npm test
+    - "Work test-first (red, green, refactor)."
+    - "Run the suite with `npm test`."

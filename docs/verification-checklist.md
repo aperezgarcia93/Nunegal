@@ -1,6 +1,6 @@
 # Implementation verification checklist
 
-**Environment:** macOS (Darwin 25.5, arm64), Node.js 22.22.0, npm 10; 2026-10-13. Verified at commit `3779570`. No deployment or live cart mutation was performed. Per-scenario results are in the [verification report](../openspec/changes/project-implementation/verification-report.md).
+**Environment:** macOS (Darwin 25.5, arm64), Node.js 22.22.0, npm 10; 2026-10-13. Verified at commit `3779570`. No deployment or live cart mutation was performed. Per-scenario results are in the [verification report](../openspec/changes/archive/2026-10-13-project-implementation/verification-report.md).
 
 ## Automated checks
 

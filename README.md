@@ -4,7 +4,7 @@ A small React application for browsing mobile devices, viewing specifications, s
 
 ## Scope and project documents
 
-The source brief is [`Prueba frontend ITX (1).pdf`](./Prueba%20frontend%20ITX%20(1).pdf). The app has two commerce views: the catalog at `/` and product details at `/products/:productId`. The [implementation plan](./docs/plans/2026-10-13-project-implementation.md) links the SDD proposal, requirements, design, task checklist, traceability matrix and [verification report](./openspec/changes/project-implementation/verification-report.md).
+The source brief is [`Prueba frontend ITX (1).pdf`](./Prueba%20frontend%20ITX%20%281%29.pdf). The app has two commerce views: the catalog at `/` and product details at `/products/:productId`. The [implementation plan](./docs/plans/2026-10-13-project-implementation.md) links the SDD proposal, requirements, design, task checklist, traceability matrix and [verification report](./openspec/changes/archive/2026-10-13-project-implementation/verification-report.md).
 
 ## Development
 

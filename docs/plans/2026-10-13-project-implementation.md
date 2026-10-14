@@ -1,6 +1,6 @@
 # Mobile-device shopping prototype: implementation plan
 
-**Date:** 2026-10-13 · **Change:** `project-implementation` · **State:** implemented and verified; publication (7.4) and archive (7.5) pending authorization. See the [verification report](../../openspec/changes/project-implementation/verification-report.md).
+**Date:** 2026-10-13 · **Change:** `project-implementation` · **State:** implemented, verified and archived; accepted specs live in [`openspec/specs/`](../../openspec/specs/). See the [verification report](../../openspec/changes/archive/2026-10-13-project-implementation/verification-report.md).
 
 Build the two-view mobile-device shopping SPA described in [the seven-page brief](../../Prueba%20frontend%20ITX%20%281%29.pdf). The user confirmed prototype scope, no additional general constraints, English documents, and authorization to complete all planning phases together. Local OpenSpec artifacts are the source of truth because project documents were explicitly requested.
 
@@ -8,18 +8,18 @@ Build the two-view mobile-device shopping SPA described in [the seven-page brief
 
 | Document | Purpose |
 |---|---|
-| [Exploration and PDF requirement register](../../openspec/changes/project-implementation/exploration.md) | Source pages, observed API evidence, unknowns, and alternatives. |
-| [Proposal](../../openspec/changes/project-implementation/proposal.md) | Intent, scope, exclusions, assumptions, risks, and success criteria. |
-| [Shell/navigation](../../openspec/changes/project-implementation/specs/shell-navigation/spec.md) | Routes, header, breadcrumbs, return navigation, responsive structure. |
-| [Catalog](../../openspec/changes/project-implementation/specs/catalog/spec.md) | Complete list, live local search, product cards, recovery. |
-| [Product detail](../../openspec/changes/project-implementation/specs/product-detail/spec.md) | Device information, selectors, validity, transitions. |
-| [Cart](../../openspec/changes/project-implementation/specs/cart/spec.md) | Exact POST payload, returned count, persistence, pending/error behavior. |
-| [Client data](../../openspec/changes/project-implementation/specs/client-data/spec.md) | API validation, strict one-hour caching, storage, concurrent reads. |
-| [Quality/delivery](../../openspec/changes/project-implementation/specs/quality-delivery/spec.md) | Reproducible commands, accessibility, safety, verification, handoff. |
-| [Technical design](../../openspec/changes/project-implementation/design.md) | Architecture, contracts, state ownership, files, test strategy, decisions. |
-| [Implementation checklist](../../openspec/changes/project-implementation/tasks.md) | Small ordered tasks, milestones, acceptance checks, planned commands. |
-| [Traceability and evidence matrix](../../openspec/changes/project-implementation/traceability.md) | All 17 PDF requirements and all specification scenarios mapped to work and validation. |
-| [Verification report](../../openspec/changes/project-implementation/verification-report.md) | Per-scenario results, command evidence, fixes from review, known limitations. |
+| [Exploration and PDF requirement register](../../openspec/changes/archive/2026-10-13-project-implementation/exploration.md) | Source pages, observed API evidence, unknowns, and alternatives. |
+| [Proposal](../../openspec/changes/archive/2026-10-13-project-implementation/proposal.md) | Intent, scope, exclusions, assumptions, risks, and success criteria. |
+| [Shell/navigation](../../openspec/changes/archive/2026-10-13-project-implementation/specs/shell-navigation/spec.md) | Routes, header, breadcrumbs, return navigation, responsive structure. |
+| [Catalog](../../openspec/changes/archive/2026-10-13-project-implementation/specs/catalog/spec.md) | Complete list, live local search, product cards, recovery. |
+| [Product detail](../../openspec/changes/archive/2026-10-13-project-implementation/specs/product-detail/spec.md) | Device information, selectors, validity, transitions. |
+| [Cart](../../openspec/changes/archive/2026-10-13-project-implementation/specs/cart/spec.md) | Exact POST payload, returned count, persistence, pending/error behavior. |
+| [Client data](../../openspec/changes/archive/2026-10-13-project-implementation/specs/client-data/spec.md) | API validation, strict one-hour caching, storage, concurrent reads. |
+| [Quality/delivery](../../openspec/changes/archive/2026-10-13-project-implementation/specs/quality-delivery/spec.md) | Reproducible commands, accessibility, safety, verification, handoff. |
+| [Technical design](../../openspec/changes/archive/2026-10-13-project-implementation/design.md) | Architecture, contracts, state ownership, files, test strategy, decisions. |
+| [Implementation checklist](../../openspec/changes/archive/2026-10-13-project-implementation/tasks.md) | Small ordered tasks, milestones, acceptance checks, planned commands. |
+| [Traceability and evidence matrix](../../openspec/changes/archive/2026-10-13-project-implementation/traceability.md) | All 17 PDF requirements and all specification scenarios mapped to work and validation. |
+| [Verification report](../../openspec/changes/archive/2026-10-13-project-implementation/verification-report.md) | Per-scenario results, command evidence, fixes from review, known limitations. |
 
 ## Recommended implementation
 
@@ -43,7 +43,7 @@ Tasks and milestone gates are authoritative in the checklist. Work is sized as s
 
 - **Apply:** after implementation is requested, use `/sdd-apply project-implementation`. Delegate to `sdd-apply`, implement the next dependency-complete task batch, run its relevant checks, and tick only completed tasks with evidence. Follow the supplied AGENTS.md workflow, including phase transition approval unless the user grants continuing authorization. The current blanket authorization covers planning only.
 - **Change a decision:** update the proposal if scope changes; update affected scenario specifications and design before dependent code; adjust tasks and traceability together. Use `/sdd-continue project-implementation` for missing planning artifacts. A separate feature starts with `/sdd-new <change-name>` and the exploration/proposal chain; `/sdd-ff <change-name>` can prepare its planning chain when authorized.
-- **Verify:** use `/sdd-verify project-implementation` after implementation. Delegate to `sdd-verify`; compare actual code and behavior against each scenario and task. Record commands, environment, results, manual evidence, and unresolved limitations in `openspec/changes/project-implementation/verification-report.md`. Correct failures before calling the project complete.
+- **Verify:** use `/sdd-verify project-implementation` after implementation. Delegate to `sdd-verify`; compare actual code and behavior against each scenario and task. Record commands, environment, results, manual evidence, and unresolved limitations in `openspec/changes/archive/2026-10-13-project-implementation/verification-report.md`. Correct failures before calling the project complete.
 - **Archive:** use `/sdd-archive project-implementation` only after implementation and verification are accepted. Delegate to `sdd-archive`; synchronize these new capability specs into `openspec/specs/` and archive the change with its evidence. Repair relative links in this index to the archived location. Planning completeness alone does not justify archiving an implemented change.
 
 These are agent workflow commands, not claims that a particular OpenSpec CLI is installed. No OpenSpec configuration existed during exploration; use the explicit paths here and add configuration only if the chosen workflow needs it. Implementation verification is recorded in the verification report; no deployment, publication, or live cart mutation has been performed.

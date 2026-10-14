@@ -57,7 +57,7 @@ A read-only request to [the product endpoint](https://itx-frontend-test.onrender
 
 All application paths below are proposed, not existing:
 
-- `openspec/changes/project-implementation/` - proposal, capability specs, design, and implementation task plan with traceability to PDF IDs.
+- `openspec/changes/archive/2026-10-13-project-implementation/` - proposal, capability specs, design, and implementation task plan with traceability to PDF IDs.
 - `README.md` - eventual setup, commands, architecture notes, assumptions, API limits, and submission instructions; establish before implementation commits.
 - `src/app/` - SPA shell, router, providers, and shared header.
 - `src/features/catalog/` - list, search, product cards, detail data, and views.

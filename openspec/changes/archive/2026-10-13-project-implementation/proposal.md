@@ -52,7 +52,7 @@ All application paths are proposed; the repository initially contained only the 
 
 | Area | Impact | Description |
 |---|---|---|
-| `openspec/changes/project-implementation/` | New | Proposal, specs, design, tasks, traceability, and verification plan. |
+| `openspec/changes/archive/2026-10-13-project-implementation/` | New | Proposal, specs, design, tasks, traceability, and verification plan. |
 | `README.md` | Planned new | Setup, commands, architecture, assumptions, API limits, and submission instructions. |
 | `package.json`, lockfile, TypeScript/Vite/lint configs | Planned new | Repeatable development, build, test, and lint toolchain. |
 | `src/app/` | Planned new | SPA shell, routes, providers, shared header and breadcrumb. |
