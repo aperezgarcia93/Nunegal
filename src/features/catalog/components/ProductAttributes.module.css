@@ -1,0 +1,5 @@
+.attributes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin: 1.25rem 0 0; border-top: 1px solid var(--line); }
+.row { min-width: 0; padding: .9rem .8rem .85rem 0; border-bottom: 1px solid var(--line); }
+.row dt { color: var(--muted); font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.row dd { overflow-wrap: anywhere; margin: .3rem 0 0; font-size: .9rem; line-height: 1.45; }
+@media (max-width: 540px) { .attributes { grid-template-columns: 1fr; } }

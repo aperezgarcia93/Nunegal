@@ -1,0 +1,15 @@
+.header { border-bottom: 1px solid var(--line); background: rgb(255 255 255 / 82%); }
+.inner { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.5rem; min-height: 5rem; }
+.brand { display: inline-flex; align-items: center; gap: .65rem; width: fit-content; color: var(--ink); font-size: 1.05rem; font-weight: 850; letter-spacing: -.04em; text-decoration: none; }
+.mark { display: grid; width: 2.25rem; height: 2.25rem; place-items: center; border-radius: .7rem; background: var(--accent); color: #fff; font-size: 1rem; letter-spacing: 0; }
+.brandLight { color: var(--accent); font-weight: 600; }
+.crumbs ol { display: flex; align-items: center; gap: .7rem; margin: 0; padding: 0; list-style: none; color: var(--muted); font-size: .8rem; }
+.crumbs li { display: flex; align-items: center; gap: .7rem; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.crumbs a:hover { color: var(--accent); }
+.crumbs [aria-current="page"] { color: var(--ink); font-weight: 700; }
+.cart { display: flex; align-items: center; gap: .55rem; min-height: 2.65rem; border: 1px solid var(--line); border-radius: 999px; padding: .35rem .55rem .35rem .85rem; font-size: .83rem; font-weight: 700; }
+.cart > span:first-child { color: var(--accent); font-size: 1.15rem; }
+.cart strong { display: grid; width: 1.8rem; height: 1.8rem; place-items: center; border-radius: 50%; background: var(--soft); color: var(--accent-dark); font-size: .78rem; }
+.announcement { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (max-width: 620px) { .inner { grid-template-columns: 1fr auto; min-height: 4.5rem; gap: .5rem; } .crumbs { grid-column: 1 / -1; grid-row: 2; padding: 0 0 .85rem; } .cart { grid-column: 2; grid-row: 1; } }
