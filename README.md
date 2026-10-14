@@ -78,3 +78,7 @@ The production build adds a Content-Security-Policy that allows only same-origin
 Contract observations are recorded in [`docs/api-contract.md`](./docs/api-contract.md), and acceptance evidence in [`docs/verification-checklist.md`](./docs/verification-checklist.md).
 
 This is a prototype. It has no checkout, authentication, custom backend or deployment configuration.
+
+## License
+
+[MIT](./LICENSE).
