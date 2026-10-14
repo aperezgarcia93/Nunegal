@@ -1,0 +1,22 @@
+@import './tokens.css';
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; background: var(--paper); color: var(--ink); }
+button, input, select { font: inherit; }
+button, a, input, select { -webkit-tap-highlight-color: transparent; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid #e08c3c; outline-offset: 3px; }
+img { display: block; max-width: 100%; }
+.page-shell { width: min(100% - 2rem, 1240px); margin-inline: auto; }
+.page-main { min-height: calc(100vh - 5rem); padding-top: 1px; padding-bottom: 3rem; }
+.eyebrow { margin: 0; color: var(--accent); font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
+.lede { color: var(--muted); line-height: 1.6; }
+.state-message { padding: 1.1rem 1.25rem; border: 1px solid var(--line); border-radius: .8rem; background: var(--surface); color: var(--muted); }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 2.75rem; border: 0; border-radius: 999px; padding: .65rem 1.1rem; font-weight: 700; cursor: pointer; transition: background-color .16s ease, transform .16s ease; }
+.button:not(:disabled):active { transform: translateY(1px); }
+.button:disabled { cursor: not-allowed; opacity: .58; }
+.button--primary { color: #fff; background: var(--accent); }
+.button--primary:not(:disabled):hover { background: var(--accent-dark); }
+.button--secondary { color: var(--ink); background: #e9ece8; }
+.image-fallback { display: grid; min-height: 8rem; place-items: center; background: linear-gradient(145deg, #e4e9e4, #f3f5f1); color: #8c9990; font-size: 2rem; }
+@media (max-width: 480px) { .page-shell { width: min(100% - 1.25rem, 1240px); } }
