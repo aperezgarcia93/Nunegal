@@ -35,4 +35,12 @@ describe('product contract normalization', () => {
     expect(normalizeDetail(detail, summary.id).purchaseUnavailableReason).toBeTruthy();
     expect(() => normalizeDetail({ ...summary, id: 'different' }, summary.id)).toThrow(ProductContractError);
   });
+
+  it('accepts unknown extra fields and rejects off-origin or insecure image URLs', () => {
+    const [item] = normalizeProductList([{ ...summary, displaySize: '7 inches', futureField: { nested: true } }]);
+    expect(item).toEqual({ id: summary.id, brand: 'Acer', model: 'Iconia', priceText: null, imageUrl: summary.imgUrl });
+    expect(normalizeProductList([{ ...summary, imgUrl: 'https://evil.example/x.jpg' }])[0]?.imageUrl).toBeNull();
+    expect(normalizeProductList([{ ...summary, imgUrl: 'http://itx-frontend-test.onrender.com/x.jpg' }])[0]?.imageUrl).toBeNull();
+    expect(normalizeProductList([{ ...summary, imgUrl: 'javascript:alert(1)' }])[0]?.imageUrl).toBeNull();
+  });
 });

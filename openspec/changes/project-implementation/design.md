@@ -176,7 +176,7 @@ All listed paths are **new**. No existing source files need migration, replaceme
 |---|---|
 | `README.md`, `.gitignore`, `.nvmrc`, `.env.example` | Setup, assumptions, exclusions, runtime, public API configuration. |
 | `package.json`, `package-lock.json`, `index.html` | Scripts, dependencies, reproducible resolution, SPA entry. |
-| `tsconfig.json`, `tsconfig.app.json`, `tsconfig.node.json`, `vite.config.ts`, `eslint.config.js` | Strict types, build/test setup, hooks/accessibility lint rules. |
+| `tsconfig.json` (single strict config covering app, tests and tool configs), `vite.config.ts`, `eslint.config.js` | Strict types, build/test setup, hooks/accessibility lint rules. |
 | `src/main.tsx`, `src/app/App.tsx`, `src/app/router.tsx`, `src/app/AppErrorBoundary.tsx` | Bootstrap, providers/error boundary, two routes and unknown-path state. |
 | `src/app/AppHeader.tsx` | Shared title, breadcrumb, count, accessible mutation status. |
 | `src/features/catalog/model/product.ts`, `normalizeProduct.ts`, `filterProducts.ts` | Domain types, verified payload adapters, pure search. |
@@ -244,3 +244,14 @@ No unanswered user preference blocks this plan. English UI, neutral branding, np
 5. **Delivery choice:** choose repository owner/provider and optional host when publishing is requested. Currency stays unspecified unless the user or authoritative service contract supplies it.
 
 These gates bound uncertainty without adding speculative commerce functionality or blocking implementation of independent shell, parser-fixture, cache, and UI work.
+
+## Implementation notes (2026-10-13)
+
+These record decisions taken during implementation and verification; behavior still follows the specifications.
+
+- **Content-Security-Policy:** `vite.config.ts` injects a CSP `<meta>` into the production HTML only (the dev server needs inline fast-refresh scripts). It allows `'self'` for scripts and styles, and the configured API origin for `img-src`/`connect-src`. A host should also send the policy as a header and add `frame-ancestors`, which a meta tag cannot carry. WebKit reports a style-src violation for native `<select>` internals; this is a browser artifact and does not affect rendering.
+- **Error recovery:** `AppErrorBoundary` is keyed by pathname inside the shell, so navigating away from a failed render clears the failure while the header stays mounted.
+- **Focus:** the shell focuses the route `<h1>` after navigation; the PDP restores that focus when its loading heading is replaced. Programmatically focused headings do not draw a focus ring.
+- **Timeout:** the shared 20-second timeout is kept after the live check observed a 52-second cold start. The first request against a sleeping service fails with a retry action instead of an open-ended wait (see `docs/api-contract.md`).
+- **Not-found:** the live service returns HTTP 500 for unknown ids, so "unavailable" is shown only for a real 404; other failures show the retryable error state.
+- **Tests:** page tests stub the `productApi` singleton methods, and integration and browser tests intercept HTTP. Browser tests run on Chromium, Firefox and WebKit against a freshly built preview, with axe-core accessibility scans; CI is defined in `.github/workflows/ci.yml`.

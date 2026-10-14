@@ -56,4 +56,43 @@ describe('product cache', () => {
     const futureCache = new ProductCache('https://api.test', storage, () => now);
     await expect(futureCache.load('list', valid, async () => ['revalidated'])).resolves.toEqual(['revalidated']);
   });
+
+  it('discards incompatible or malformed entries without touching cart or unrelated keys', async () => {
+    const { storage, values } = storageHarness();
+    const key = 'nunegal:products:v1:https%3A%2F%2Fapi.test:list';
+    values.set('nunegal:cart-count:v1', '{"version":1,"count":3}');
+    values.set('other-app', 'keep');
+    const valid = (value: unknown): value is string[] => Array.isArray(value);
+    values.set(key, JSON.stringify({ version: 0, fetchedAt: 1, data: ['old'] }));
+    await expect(new ProductCache('https://api.test', storage, () => 2).load('list', valid, async () => ['new'])).resolves.toEqual(['new']);
+    values.set(key, '{');
+    await expect(new ProductCache('https://api.test', storage, () => 2).load('list', valid, async () => ['again'])).resolves.toEqual(['again']);
+    expect(values.get('nunegal:cart-count:v1')).toBe('{"version":1,"count":3}');
+    expect(values.get('other-app')).toBe('keep');
+  });
+
+  it('never caches a failure nor serves expired data when revalidation fails', async () => {
+    let now = 0;
+    const { storage } = storageHarness();
+    const cache = new ProductCache('https://api.test', storage, () => now);
+    const valid = (value: unknown): value is string[] => Array.isArray(value);
+    await cache.load('list', valid, async () => ['stale']);
+    now = PRODUCT_CACHE_TTL_MS;
+    await expect(cache.load('list', valid, async () => { throw new Error('offline'); })).rejects.toThrow('offline');
+    await expect(cache.load('list', valid, async () => ['fresh'])).resolves.toEqual(['fresh']);
+  });
+
+  it('keeps working in memory when storage writes fail', async () => {
+    const storage = new SafeStorage(() => ({
+      getItem: () => null,
+      setItem: () => { throw new DOMException('full', 'QuotaExceededError'); },
+      removeItem: () => undefined,
+    }));
+    const cache = new ProductCache('https://api.test', storage, () => 0);
+    const fetchData = vi.fn(async () => ['memory']);
+    const valid = (value: unknown): value is string[] => Array.isArray(value);
+    await cache.load('list', valid, fetchData);
+    await expect(cache.load('list', valid, fetchData)).resolves.toEqual(['memory']);
+    expect(fetchData).toHaveBeenCalledTimes(1);
+  });
 });

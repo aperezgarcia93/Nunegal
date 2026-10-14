@@ -14,6 +14,11 @@ export const productList: ProductSummary[] = [
   })),
 ];
 
+/** The list in the service's raw wire shape (`price`, `imgUrl`), as observed in docs/api-contract.md. */
+export const rawProductList = productList.map(({ id, brand, model, priceText, imageUrl }) => ({
+  id, brand, model, price: priceText ?? '', imgUrl: imageUrl ?? '',
+}));
+
 export const productDetail: ProductDetail = {
   ...productList[0]!,
   attributes: {

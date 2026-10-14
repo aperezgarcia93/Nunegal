@@ -32,11 +32,20 @@ On 2026-10-13, from the running Vite origin `http://127.0.0.1:5173`, a read-only
 
 Both responses included an `HttpOnly` `session_id` cookie. Its meaning and whether it affects cart identity/count remain unverified. The client does not add cross-origin credentials or infer session guarantees from the header. No POST was sent.
 
+## Live smoke check (2026-10-13, 20:20 UTC)
+
+These were read-only GETs with finite timeouts; no POST was sent.
+
+- `GET /api/product`: HTTP 200 after **52.4 s**, because the service was cold. The list returned **100** products (the brief and earlier observation described 37) with keys `id`, `brand`, `model`, `price`, `imgUrl`. IDs were unique, 6 prices were blank, and every `imgUrl` used the API origin.
+- `GET /api/product/ZmGrkLRPXOTpxsU4jjAcv`: HTTP 200 with the same options as the earlier observation.
+- `GET /api/product/does-not-exist-xyz`: **HTTP 500** `{"message":"An Unexpected Error Occurred","code":0}`. The service does not report not-found distinctly, so the UI shows its retryable error state for unknown ids.
+- Real-browser check: the production build (`vite preview`) loaded the live catalog (100 cards), a product detail page and its image in Chromium, Firefox and WebKit, with no page errors. This confirms browser-engine CORS for reads under the production CSP.
+
 ## Still unverified
 
-- The complete schema across all products, including malformed/missing fields and option combinations.
-- A verified not-found status/body, non-JSON error behavior, and API timeout distribution.
-- Browser-origin CORS behavior, cart preflight behavior, cookies/session requirements, and cart semantics.
+- The complete schema across all products, including malformed/missing fields and option combinations beyond the sampled detail.
+- Timeout distribution beyond one observed cold start: with the 20 s client timeout, the first request to a sleeping service fails and a manual retry succeeds.
+- Cart preflight in a browser engine, cookies/session requirements, and cart semantics.
 - `POST /api/cart` response shape and whether `count` is authoritative. The implementation follows the PDF's `{ id, colorCode, storageCode }` request and `{ count }` response contract using mocks; no live POST has been made.
 
-The implementation uses a finite 20-second timeout, validates every response, and presents recoverable errors. It does not assume credentials, retries, or idempotency. See the SDD specifications and verification checklist for acceptance limits.
+The implementation uses a finite 20-second timeout, validates every response, and presents recoverable errors. It does not assume credentials, retries, or idempotency. See the SDD specifications and verification report for acceptance limits.

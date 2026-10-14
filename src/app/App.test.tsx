@@ -5,12 +5,12 @@ import { describe, expect, it, vi } from 'vitest';
 import { App } from './App';
 import { http, HttpResponse } from 'msw';
 import { server } from '../../tests/mocks/server';
-import { productList } from '../../tests/fixtures/products';
+import { productList, rawProductList } from '../../tests/fixtures/products';
 
 describe('shopping navigation', () => {
   it('shows the catalog, filters locally, opens a product, and returns home', async () => {
     localStorage.clear();
-    server.use(http.get('https://itx-frontend-test.onrender.com/api/product', () => HttpResponse.json(productList)));
+    server.use(http.get('https://itx-frontend-test.onrender.com/api/product', () => HttpResponse.json(rawProductList)));
     localStorage.setItem('nunegal:cart-count:v1', JSON.stringify({ version: 1, count: 7 }));
     let postedBody: unknown;
     const cartHandler = vi.fn(async ({ request }: { request: Request }) => {

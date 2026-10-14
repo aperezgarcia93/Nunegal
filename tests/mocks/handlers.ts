@@ -1,10 +1,10 @@
 import { http, HttpResponse } from 'msw';
-import { productList, rawProductDetail } from '../fixtures/products';
+import { rawProductDetail, rawProductList } from '../fixtures/products';
 
 const api = 'https://itx-frontend-test.onrender.com';
 
 export const handlers = [
-  http.get(`${api}/api/product`, () => HttpResponse.json(productList)),
+  http.get(`${api}/api/product`, () => HttpResponse.json(rawProductList)),
   http.get(`${api}/api/product/:id`, ({ params }) => params.id === rawProductDetail.id
     ? HttpResponse.json(rawProductDetail)
     : new HttpResponse(null, { status: 404 })),

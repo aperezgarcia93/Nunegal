@@ -17,26 +17,21 @@ export function VariantForm({ productId, label, colors, storages, purchaseUnavai
   pending: boolean;
   onAdd: (input: AddToCartInput, label: string) => void;
 }) {
-  const [selection, setSelection] = useState<{ id: string; color: string; storage: string }>(() => ({
-    id: productId,
+  // The parent keys this form by product identity, so a new product always starts a fresh selection.
+  const [current, setSelection] = useState(() => ({
     color: colors.length === 1 ? '0' : '',
     storage: storages.length === 1 ? '0' : '',
   }));
-  const current = selection.id === productId ? selection : {
-    id: productId,
-    color: colors.length === 1 ? '0' : '',
-    storage: storages.length === 1 ? '0' : '',
-  };
   const validOptions = uniqueOptions(colors) && uniqueOptions(storages) && !purchaseUnavailableReason;
   const selectedColor = current.color === '' ? undefined : colors[Number(current.color)];
   const selectedStorage = current.storage === '' ? undefined : storages[Number(current.storage)];
   const ready = validOptions && selectedColor !== undefined && selectedStorage !== undefined;
-  const hint = purchaseUnavailableReason
-    || (!selectedColor || !selectedStorage ? 'Choose a color and storage option to continue.' : '');
+  const missing = [!selectedColor && 'a color', !selectedStorage && 'a storage option'].filter(Boolean).join(' and ');
+  const hint = purchaseUnavailableReason || (missing ? `Choose ${missing} to continue.` : '');
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!ready || !selectedColor || !selectedStorage) return;
+    if (!ready || pending || !selectedColor || !selectedStorage) return;
     const input: AddToCartInput = { id: productId, colorCode: selectedColor.code as OptionCode, storageCode: selectedStorage.code as OptionCode };
     onAdd(input, label);
   }

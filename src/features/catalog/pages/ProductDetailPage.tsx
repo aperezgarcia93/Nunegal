@@ -24,6 +24,13 @@ export function ProductDetailPage() {
       : null);
   }, [location.pathname, setProductTitle, state]);
 
+  // The loading heading is replaced once the product settles; keep focus on the route heading.
+  useEffect(() => {
+    if (state.status !== 'loading' && document.activeElement === document.body) {
+      document.querySelector<HTMLElement>('main h1')?.focus();
+    }
+  }, [state.status]);
+
   if (state.status === 'loading') return <main className="page-shell page-main">
     <Link className={styles.back} to="/">← Back to catalog</Link>
     <h1 tabIndex={-1}>Product details</h1>

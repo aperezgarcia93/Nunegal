@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useMemo, useRef, useState, type ReactNode } from 'react';
 import { HttpError } from '../../shared/api/http';
 import { safeStorage } from '../../shared/storage/safeStorage';
 import { cartApi, type CartApi } from './cartApi';
@@ -40,5 +40,6 @@ export function CartProvider({ children, api = cartApi, storage = defaultStorage
     }
   }, [api, storage]);
 
-  return <CartContext.Provider value={{ count, pending, message, add }}>{children}</CartContext.Provider>;
+  const value = useMemo(() => ({ count, pending, message, add }), [count, pending, message, add]);
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

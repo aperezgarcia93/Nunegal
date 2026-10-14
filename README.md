@@ -4,18 +4,62 @@ A small React application for browsing mobile devices, viewing specifications, s
 
 ## Scope and project documents
 
-The source brief is [`Prueba frontend ITX (1).pdf`](./Prueba%20frontend%20ITX%20(1).pdf). The app has two commerce views: the catalog at `/` and product details at `/products/:productId`. The [implementation plan](./docs/plans/2026-10-13-project-implementation.md) links the SDD proposal, requirements, design, task checklist, and traceability matrix.
+The source brief is [`Prueba frontend ITX (1).pdf`](./Prueba%20frontend%20ITX%20(1).pdf). The app has two commerce views: the catalog at `/` and product details at `/products/:productId`. The [implementation plan](./docs/plans/2026-10-13-project-implementation.md) links the SDD proposal, requirements, design, task checklist, traceability matrix and [verification report](./openspec/changes/project-implementation/verification-report.md).
 
 ## Development
 
-Requires Node.js 22.22.0 (or a compatible Node 22 release at least 22.13.0) and npm 10. Install dependencies with `npm ci`, copy `.env.example` to `.env` only when changing the public API base URL, then run `npm run start`. The development server URL is printed in the terminal.
+Requires Node.js 22.22.0 (`.nvmrc`; any Node 22 ≥ 22.13.0 works) and npm 10.
 
-Available checks: `npm run build`, `npm test`, `npm run lint`, and `npm run typecheck`. `npm run test:e2e` exercises the built SPA in Chromium; install its browser once with `npx playwright install chromium`.
+```sh
+nvm use                 # or otherwise select Node 22
+npm ci                  # lockfile install
+npm run start           # Vite dev server; the URL is printed in the terminal
+```
+
+Copy `.env.example` to `.env` only to point at a different public API base URL.
+
+| Command | Purpose |
+|---|---|
+| `npm run start` | Development server |
+| `npm run build` | Type-check and production build into `dist/` |
+| `npm test` | Unit, component and integration tests (Vitest, runs once) |
+| `npm run lint` | ESLint, zero warnings allowed |
+| `npm run typecheck` | TypeScript without emitting |
+| `npm run test:e2e` | Playwright on Chromium, Firefox and WebKit against a fresh production build |
+| `npm run preview` | Serve the built `dist/` locally |
+
+Before the first browser test run, install the browsers once with `npx playwright install chromium firefox webkit`. Use `npx playwright test --project=chromium` for a faster single-browser run. CI (`.github/workflows/ci.yml`) runs every check above on push and pull request.
+
+## Testing
+
+All automated tests use fixtures; none of them reach the live service. Vitest uses MSW and fails any unhandled request. Playwright intercepts every request to the API origin (`tests/e2e/support.ts`). The browser suites cover these areas:
+
+- **Shopping journeys:** search, detail, exact cart payload, returned-count replacement, reload persistence, history, direct entry, unknown routes, and a keyboard-only journey.
+- **Recovery:** list and detail retry, a single pending addition across navigation, malformed or lost cart responses without replay, out-of-order product responses, and one-hour cache expiry using a controlled clock.
+- **Quality:** axe-core WCAG 2.1 A/AA scans, 320/640/768/1280 px layouts, focus visibility, and absence of console or CSP errors.
 
 ## Architecture and behavior
 
-React, TypeScript, Vite, and React Router provide a client-routed SPA. Product requests are validated at the API boundary and cached independently for one hour. Cart count persistence uses a separate browser-storage key. Search is local. Internal links use `/` and `/products/:productId`; a static host must serve `index.html` for those routes (SPA fallback) to support direct entry and refresh.
+React, TypeScript, Vite and React Router provide a client-routed SPA:
 
-The API base is public configuration (`VITE_API_BASE_URL`) and defaults to `https://itx-frontend-test.onrender.com`; it must never contain credentials. The supplied service may be unavailable or block browser CORS. We do not invent currency for raw price strings. When browser storage is unavailable, cart count remains available for the current session but cannot survive a reload. No cart read, identity, cross-tab synchronization, or idempotency guarantee is assumed. Product schema observations and outstanding limitations are recorded in [`docs/api-contract.md`](./docs/api-contract.md).
+- `src/shared/api/http.ts` is the only network boundary. It enforces a 20 s timeout, uses typed errors, and rejects non-HTTPS remote bases.
+- `src/features/catalog/model/normalizeProduct.ts` validates and normalizes service data. Images are accepted only over HTTPS from the API origin.
+- `src/shared/cache/productCache.ts` caches the list and each detail independently for exactly one hour, keeps the cache in `localStorage` with an in-memory fallback, and coalesces concurrent reads.
+- `src/features/cart/` sends the exact `{ id, colorCode, storageCode }` and stores the count the service returns under its own key, so the count does not expire with the product cache.
 
-This is a prototype. It has no checkout, authentication, custom backend, or deployment configuration.
+Search is local and never requests data. Selectors stay visible; an option is preselected only when it is the only one. A cart addition is never retried automatically. If the outcome is uncertain, the visitor is told that another attempt may add another item. Only one addition can be pending in the whole app.
+
+The production build adds a Content-Security-Policy that allows only same-origin scripts and styles, and the API origin for data and images. Internal links use `/` and `/products/:productId`. A static host must serve `index.html` for those routes (SPA fallback) while still returning 404 for missing assets. It should also send the CSP as a header with `frame-ancestors`.
+
+## Configuration and known limitations
+
+- **API base:** `VITE_API_BASE_URL` is public configuration and defaults to `https://itx-frontend-test.onrender.com`. It must never contain credentials.
+- **Cold starts:** the free-tier service can take about 50 s to wake up. The first request then times out after 20 s, and "Try again" succeeds once the service is warm.
+- **Unknown products:** the service answers unknown ids with HTTP 500, so the app shows a retryable error rather than "not found".
+- **Prices:** prices are shown as the raw strings the service provides; blank prices read "Price unavailable", and no currency is invented.
+- **Cart persistence:** when browser storage is unavailable, the cart count still works for the current session but does not survive a reload.
+- **Cart semantics:** no cart read, identity, cross-tab synchronization or idempotency is assumed. No live cart request was sent during development.
+
+Contract observations are recorded in [`docs/api-contract.md`](./docs/api-contract.md), and acceptance evidence in [`docs/verification-checklist.md`](./docs/verification-checklist.md).
+
+This is a prototype. It has no checkout, authentication, custom backend or deployment configuration.

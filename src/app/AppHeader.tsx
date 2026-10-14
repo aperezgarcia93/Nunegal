@@ -25,7 +25,7 @@ export function AppHeader({ productTitle }: { productTitle: string | null }) {
           <li aria-current="page">{pageLabel}</li>
         </ol>
       </nav>
-      <div className={styles.cart} aria-label={`Cart items: ${count}`}>
+      <div className={styles.cart} role="group" aria-label={`Cart items: ${count}`}>
         <span aria-hidden="true">◌</span><span>Cart</span><strong>{count}</strong>
       </div>
     </div>

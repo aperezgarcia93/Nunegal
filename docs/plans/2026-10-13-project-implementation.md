@@ -1,6 +1,6 @@
 # Mobile-device shopping prototype: implementation plan
 
-**Date:** 2026-10-13 · **Change:** `project-implementation` · **State:** implementation in progress; see the live task checklist and verification evidence.
+**Date:** 2026-10-13 · **Change:** `project-implementation` · **State:** implemented and verified; publication (7.4) and archive (7.5) pending authorization. See the [verification report](../../openspec/changes/project-implementation/verification-report.md).
 
 Build the two-view mobile-device shopping SPA described in [the seven-page brief](../../Prueba%20frontend%20ITX%20%281%29.pdf). The user confirmed prototype scope, no additional general constraints, English documents, and authorization to complete all planning phases together. Local OpenSpec artifacts are the source of truth because project documents were explicitly requested.
 
@@ -19,6 +19,7 @@ Build the two-view mobile-device shopping SPA described in [the seven-page brief
 | [Technical design](../../openspec/changes/project-implementation/design.md) | Architecture, contracts, state ownership, files, test strategy, decisions. |
 | [Implementation checklist](../../openspec/changes/project-implementation/tasks.md) | Small ordered tasks, milestones, acceptance checks, planned commands. |
 | [Traceability and evidence matrix](../../openspec/changes/project-implementation/traceability.md) | All 17 PDF requirements and all specification scenarios mapped to work and validation. |
+| [Verification report](../../openspec/changes/project-implementation/verification-report.md) | Per-scenario results, command evidence, fixes from review, known limitations. |
 
 ## Recommended implementation
 
@@ -45,7 +46,7 @@ Tasks and milestone gates are authoritative in the checklist. Work is sized as s
 - **Verify:** use `/sdd-verify project-implementation` after implementation. Delegate to `sdd-verify`; compare actual code and behavior against each scenario and task. Record commands, environment, results, manual evidence, and unresolved limitations in `openspec/changes/project-implementation/verification-report.md`. Correct failures before calling the project complete.
 - **Archive:** use `/sdd-archive project-implementation` only after implementation and verification are accepted. Delegate to `sdd-archive`; synchronize these new capability specs into `openspec/specs/` and archive the change with its evidence. Repair relative links in this index to the archived location. Planning completeness alone does not justify archiving an implemented change.
 
-These are agent workflow commands, not claims that a particular OpenSpec CLI is installed. No OpenSpec configuration existed during exploration; use the explicit paths here and add configuration only if the chosen workflow needs it. No application tests, production build, deployment, publication, or live cart mutation have been performed by this planning package.
+These are agent workflow commands, not claims that a particular OpenSpec CLI is installed. No OpenSpec configuration existed during exploration; use the explicit paths here and add configuration only if the chosen workflow needs it. Implementation verification is recorded in the verification report; no deployment, publication, or live cart mutation has been performed.
 
 ## First implementation gate
 

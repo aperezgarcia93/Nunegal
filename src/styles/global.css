@@ -6,6 +6,8 @@ button, input, select { font: inherit; }
 button, a, input, select { -webkit-tap-highlight-color: transparent; }
 a { color: inherit; }
 :focus-visible { outline: 3px solid #e08c3c; outline-offset: 3px; }
+/* Route headings receive programmatic focus for screen readers; they are not interactive controls. */
+h1[tabindex="-1"]:focus { outline: none; }
 img { display: block; max-width: 100%; }
 .page-shell { width: min(100% - 2rem, 1240px); margin-inline: auto; }
 .page-main { min-height: calc(100vh - 5rem); padding-top: 1px; padding-bottom: 3rem; }

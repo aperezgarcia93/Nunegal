@@ -14,7 +14,7 @@ export class AppErrorBoundary extends Component<{ children: ReactNode }, State> 
 
   render() {
     if (this.state.failed) return <main className="page-shell page-main">
-      <h1>Something went wrong.</h1>
+      <h1 tabIndex={-1}>Something went wrong.</h1>
       <p>Return to the catalog and try again.</p>
       <Link className="button button--primary" to="/">Go to catalog</Link>
     </main>;

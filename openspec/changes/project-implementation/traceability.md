@@ -1,6 +1,6 @@
 # Traceability and planned verification
 
-**Status:** coverage mapping only; no implementation or application test has passed by virtue of appearing here. Task IDs refer to [tasks.md](tasks.md). Scenario definitions are the acceptance source; validation methods below state how evidence will be obtained. The source register in [exploration.md](exploration.md) records PDF page numbers and separates mandates from engineering decisions.
+**Status:** verified 2026-10-13. Per-scenario results and evidence are in [verification-report.md](verification-report.md) (64 passed, 1 partially verified, 1 blocked on publication); the "planned" methods below remain the mapping, not the results. Task IDs refer to [tasks.md](tasks.md). Scenario definitions are the acceptance source; validation methods below state how evidence will be obtained. The source register in [exploration.md](exploration.md) records PDF page numbers and separates mandates from engineering decisions.
 
 ## PDF → specification → task → evidence
 
@@ -26,7 +26,7 @@
 
 ## Complete requirement and scenario coverage
 
-Every named scenario is listed explicitly below. All rows currently have evidence state **planned**. The final verification report must give each scenario a result and evidence reference; do not mark a row passed merely because a nearby scenario passed.
+Every named scenario is listed explicitly below. Results for every row are recorded in [verification-report.md](verification-report.md). The final verification report must give each scenario a result and evidence reference; do not mark a row passed merely because a nearby scenario passed.
 
 | Requirement / specification | Scenarios | Tasks | Planned verification method |
 |---|---|---|---|

@@ -19,7 +19,8 @@ function AppShell() {
 
   return <>
     <AppHeader productTitle={title.path === location.pathname ? title.label : null} />
-    <AppErrorBoundary>
+    {/* Keyed by route so a recovered navigation clears a previous render failure. */}
+    <AppErrorBoundary key={location.pathname}>
       <Outlet context={{ setProductTitle } satisfies ShellOutletContext} />
     </AppErrorBoundary>
   </>;
