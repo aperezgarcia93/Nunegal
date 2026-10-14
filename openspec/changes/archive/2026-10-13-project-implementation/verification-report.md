@@ -4,7 +4,7 @@
 
 ## Verdict
 
-Implementation is **functionally complete and verified against fixtures** for 64 of 66 scenarios. One scenario is **partially verified**: QUAL-02b, because no manual screen-reader session was run. One is **blocked**: QUAL-05b, because public repository publication has not been authorized. No MUST is reported as passed without a test or recorded observation. Live-service limitations are listed separately and are not hidden by mocked success.
+Implementation is **verified** for 65 of 66 scenarios. One scenario is **partially verified**: QUAL-02b, because no manual screen-reader session was run. No MUST is reported as passed without a test or recorded observation. Live-service limitations are listed separately and are not hidden by mocked success.
 
 ## Command evidence
 
@@ -93,7 +93,7 @@ U = Vitest file under `src/`; E = Playwright spec under `tests/e2e/`.
 | QUAL-04a | Passed | Unit and browser suites intercept all API traffic |
 | QUAL-04b | Passed | This report and `docs/verification-checklist.md` |
 | QUAL-05a | Passed | README updated with setup, commands, architecture, limits |
-| QUAL-05b | Blocked | Public repository publication not yet authorized; there is no remote |
+| QUAL-05b | Passed | Public at https://github.com/aperezgarcia93/Nunegal; readable without credentials; CI run 38465870590 passed |
 
 ## Review findings fixed during verification
 
@@ -118,5 +118,5 @@ U = Vitest file under `src/`; E = Playwright spec under `tests/e2e/`.
 
 ## Remaining SDD steps
 
-- **7.4:** publish to a public repository after authorization, then run CI once.
+- **7.4:** done. The repository is published and its first CI run passed.
 - **7.5:** done. Specs are synced into `openspec/specs/` and this change is archived.

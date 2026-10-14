@@ -1,6 +1,6 @@
 # Traceability and planned verification
 
-**Status:** verified 2026-10-13. Per-scenario results and evidence are in [verification-report.md](verification-report.md) (64 passed, 1 partially verified, 1 blocked on publication); the "planned" methods below remain the mapping, not the results. Task IDs refer to [tasks.md](tasks.md). Scenario definitions are the acceptance source; validation methods below state how evidence will be obtained. The source register in [exploration.md](exploration.md) records PDF page numbers and separates mandates from engineering decisions.
+**Status:** verified 2026-10-13. Per-scenario results and evidence are in [verification-report.md](verification-report.md) (65 passed, 1 partially verified); the "planned" methods below remain the mapping, not the results. Task IDs refer to [tasks.md](tasks.md). Scenario definitions are the acceptance source; validation methods below state how evidence will be obtained. The source register in [exploration.md](exploration.md) records PDF page numbers and separates mandates from engineering decisions.
 
 ## PDF → specification → task → evidence
 

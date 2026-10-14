@@ -13,7 +13,7 @@
 - [x] `npm audit`: 0 vulnerabilities.
 - [x] Gate failures: a temporary failing test exited 1, a lint violation 1, a type error 2.
 - [x] `npm run start`: served `/` and `/products/abc` with HTTP 200. `vite preview` also serves direct product routes (SPA fallback).
-- [ ] GitHub Actions run of `.github/workflows/ci.yml`: not run, because there is no remote yet.
+- [x] GitHub Actions: [run 38465870590](https://github.com/aperezgarcia93/Nunegal/actions/runs/38465870590) passed every gate in 2m04s.
 - [x] Clean `git clone` rerun of commit `3779570`: all scripts and the e2e suite passed.
 
 ## Browser and accessibility acceptance
